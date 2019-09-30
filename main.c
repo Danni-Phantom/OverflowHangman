@@ -32,15 +32,14 @@ int main(void) {
     if (guess == "Phrase") {
         scanf("%s", phrase_guess);
         int cmp = strcmp(dict[phrase_num], phrase_guess);
-        if (cmp != 0){
+        if (cmp != 0) {
 
             tries -= 3;
             printf("You're not a good person. You know that, right? [-3 tries]" + tries + "remaining.");
             print_hangman(tries);
-            
+
             for (int i = 0; i < phrase_size; i++) {
                 for (int j = 0; j < phrase_size; j++) {
-
 
 
                 }
@@ -49,14 +48,20 @@ int main(void) {
         }
 
 
-
-    } else if() {
-        // Letter guess
+    }
     } else {
-        // error
+        printf("You guessed the char: %c", guess[0]);
+        // some function to check the character
+        // if (char exists in code)
+        // print "Unbelievable You, \"Subject Name Here\", must be the pride of \"Subject Hometown Here\"
+        // else
+        // print "I feel sorry for you, really, because you're not even in the right place"
     }
 
 }
+
+
+
 // this fills in the characters from the phrase
 char* guess_fill_in(char[] dictIn, char[] guess) {
 
