@@ -11,13 +11,13 @@ int main(void) {
     char dict[5];
     char guess[6];
     dict[0] = "Cake is a lie";
-    dict[1] = "This statement is false - Glados";
+    dict[1] = "ThIs StaTEmEnt Is FaLSe - Glados";
     dict[2] = "bug = undocumented feature";
     dict[3] = "I'm a potato";
     dict[4] = "Are you still there?";
 
     int phrase_num = rand()%(4-0 + 1) + 0;
-    const int phrase_size = sizeof(dict[phrase_num])/ sizeof(char);
+    int phrase_size = sizeof(dict[phrase_num])/ sizeof(char);
     char* phrase_guess = malloc(phrase_size);
     int tries = 7;
     int pass = 0;
@@ -48,13 +48,16 @@ int main(void) {
         }
 
 
-    } else {
+    } else if (guess[1] == '\0') {
         printf("You guessed the char: %c", guess[0]);
         // some function to check the character
         // if (char exists in code)
         // print "Unbelievable You, \"Subject Name Here\", must be the pride of \"Subject Hometown Here\"
         // else
         // print "I feel sorry for you, really, because you're not even in the right place"
+    
+    } else {
+        
     }
 
 }
@@ -142,4 +145,29 @@ void print_hangman(int tries_left) {
             printf("┻┻━━━━━━━");
             break;
     }
+}
+
+void printCompanionCube(){
+    printf("The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak");
+    printf("+@##########M/             :@#########@/");
+    printf("##############$;H#######@;+#############");
+    printf("###############M########################");
+    printf("##############X,-/++/+\%+/,\%#############");
+    printf("############M$:           -X############");
+    printf("##########H;.      ,--.     =X##########");
+    printf(":X######M;     -$H@M##MH%:    :H#######@");
+    printf("  =\%#M+=,   ,+@#######M###H:    -=/M#\%");
+    printf("  \%M##@+   .X##$, ./+- ./###;    +M##\%");
+    printf("  \%####M.  /###=         @##M.   X###\%");
+    printf("  \%####M.  ;M##H:.     =$###X.   $###\%");
+    printf("  \%####@.   /####M$-./@#####:    %###\%");
+    printf("  \%H#M/,     /H###########@:     ./M#\%");
+    printf(" ;$H##@@H:    .;$HM#MMMH$;,   ./H@M##M$=");
+    printf("X#########%.      ..,,.     .;@#########");
+    printf("###########H+:.           ./@###########");
+    printf("##############/ ./%%%%+/.-M#############");
+    printf("##############H$@#######@@##############");
+    printf("##############X\%########M$M#############");
+    printf("+M##########H:            .$##########X=");
+
 }
