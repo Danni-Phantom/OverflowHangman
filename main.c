@@ -8,13 +8,12 @@ char* guess_fill_in(char dictIn[], char guess[]);
 void autofill_in(char* fill_in);
 void print_fill_in(char fill_in[]);
 int check_phrase(char* fill_in, char dictIn[], char guess[]);
+void printCompanionCube();
 
 int main(void) {
 
     char *dict[5];
-    char guess[6];
-    char dict[5];
-    char guess[6];
+    char guess[6];    
     dict[0] = "Cake is a lie";
     dict[1] = "ThIs StaTEmEnt Is FaLSe - Glados";
     dict[2] = "bug = undocumented feature";
@@ -23,50 +22,45 @@ int main(void) {
 
     int phrase_num = rand()%(4-0 + 1) + 0;
     int phrase_size = sizeof(dict[phrase_num])/ sizeof(char);
-    char word [phrase_size]= dict[phrase_num];
+    char* word = malloc(phrase_size);
     for (char *p = word; *p; ++p) *p = tolower(*p);
-    char phrase_guess [phrase_size];
-    char [phrase_size] phrase_guess;
     char* phrase_guess = malloc(phrase_size);
     int tries = 7;
     int pass = 0;
 
-    char [phrase_size] fill_in;
-    fill_in = autofill_in(fill_in, word);
     char* fill_in = malloc(phrase_size);
-    autofill_in(fill_in);
+    autofill_in(fill_in, word);
 
     printf("Welcome to Hangman!");
-    printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!");
+    printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!\n");
 
-    scanf("%s", guess);
-    if (guess == "Phrase") {
-        scanf("%s", phrase_guess);
-        for (char *p = phrase_guess; *p; ++p) *p = tolower(*p);
-        int cmp = check_phrase(fill_in, word, phrase_guess);
-        if (cmp != 0) {
-            tries -= 3;
-            printf("You're not a good person. You know that, right? [-3 tries] %d remaining.", tries);
-            print_hangman(tries);
-            print_fill_in(fill_in);
+    while (pass != 1){
+        scanf("%s", guess);
+        if (guess == "Phrase") {
+            scanf("%s", phrase_guess);
+            for (char *p = phrase_guess; *p; ++p) *p = tolower(*p);
+            int cmp = check_phrase(fill_in, word, phrase_guess);
+            if (cmp != 0) {
+                tries -= 3;
+                printf("You're not a good person. You know that, right? [-3 tries] %d remaining.\n", tries);
+                print_hangman(tries);
+                print_fill_in(fill_in);
+
+            }
+
+            } else if (guess[1] == '\0') {
+            printf("You guessed the char: %c", guess[0]);
+            // some function to check the character
+            // if (char exists in code)
+            // print "Unbelievable You, \"Subject Name Here\", must be the pride of \"Subject Hometown Here\"
+            // else
+            // print "I feel sorry for you, really, because you're not even in the right place"
+
+        } else {
 
         }
-
-        }
-
-
-    } else if (guess[1] == '\0') {
-        printf("You guessed the char: %c", guess[0]);
-        // some function to check the character
-        // if (char exists in code)
-        // print "Unbelievable You, \"Subject Name Here\", must be the pride of \"Subject Hometown Here\"
-        // else
-        // print "I feel sorry for you, really, because you're not even in the right place"
-
-    } else {
 
     }
-
 }
 
 // Checks if the phrase guess is complete? Not sure if needed, but ehhhhh
@@ -89,15 +83,15 @@ int check_phrase(char* fill_in, char dictIn[], char guess[]) {
 
 // Print the blanks and filled in characters
 void print_fill_in(char fill_in[]) {
-    s = sizeof(fill_in)/sizeof(char);
+    int s = sizeof(fill_in)/sizeof(char);
     for (int a = 0; a < s; a++) {
         printf(fill_in[a] + " ");
     }
 }
 
 // this fills in the characters from the phrase
-char* guess_fill_in(char* fill_in, char[] dictIn, char guess[]) {
-    s = sizeof(dictIn)/sizeof(char);
+char* guess_fill_in(char* fill_in, char* dictIn, char* guess) {
+    int s = sizeof(dictIn)/sizeof(char);
     for (int a = 0; a < s; a++) {
         if (dictIn[a] == guess) {
             fill_in[a] = guess;
@@ -129,93 +123,93 @@ void print_hangman(int tries_left) {
     }
     switch (tries_left) {
         case 7:
-            printf("┏━━━╤━");
-            printf("┃┃    ");
-            printf("┃┃");
-            printf("┃┃");
-            printf("┃┃");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃    \n");
+            printf("┃┃\n");
+            printf("┃┃\n");
+            printf("┃┃\n");
+            printf("┻┻━━━━━━━\n");
             break;
         case 6:
-            printf("┏━━━╤━");
-            printf("┃┃  O ");
-            printf("┃┃");
-            printf("┃┃");
-            printf("┃┃");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃  O \n");
+            printf("┃┃\n");
+            printf("┃┃\n");
+            printf("┃┃\n");
+            printf("┻┻━━━━━━━\n");
             break;
         case 5:
-            printf("┏━━━╤━");
-            printf("┃┃  O ");
-            printf("┃┃  | ");
-            printf("┃┃    ");
-            printf("┃┃    ");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃  O \n");
+            printf("┃┃  | \n");
+            printf("┃┃    \n");
+            printf("┃┃    \n");
+            printf("┻┻━━━━━━━\n");
             break;
         case 4:
-            printf("┏━━━╤━");
-            printf("┃┃  O ");
-            printf("┃┃ ╲| ");
-            printf("┃┃    ");
-            printf("┃┃    ");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃  O \n");
+            printf("┃┃ ╲| \n");
+            printf("┃┃    \n");
+            printf("┃┃    \n");
+            printf("┻┻━━━━━━━\n");
             break;
         case 3:
-            printf("┏━━━╤━");
-            printf("┃┃  O ");
-            printf("┃┃ ╲|╱");
-            printf("┃┃    ");
-            printf("┃┃    ");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃  O \n");
+            printf("┃┃ ╲|╱\n");
+            printf("┃┃    \n");
+            printf("┃┃    \n");
+            printf("┻┻━━━━━━━\n");
             break;
         case 2:
-            printf("┏━━━╤━");
-            printf("┃┃  O ");
-            printf("┃┃ ╲|╱");
-            printf("┃┃  | ");
-            printf("┃┃    ");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃  O \n");
+            printf("┃┃ ╲|╱\n");
+            printf("┃┃  | \n");
+            printf("┃┃    \n");
+            printf("┻┻━━━━━━━\n");
             break;
         case 1:
-            printf("┏━━━╤━");
-            printf("┃┃  O ");
-            printf("┃┃ ╲|╱");
-            printf("┃┃  | ");
-            printf("┃┃ ╱  ");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃  O \n");
+            printf("┃┃ ╲|╱\n");
+            printf("┃┃  | \n");
+            printf("┃┃ ╱  \n");
+            printf("┻┻━━━━━━━\n");
             break;
         case 0:
-            printf("┏━━━╤━");
-            printf("┃┃  O ");
-            printf("┃┃ ╲|╱");
-            printf("┃┃  | ");
-            printf("┃┃ ╱ ╲");
-            printf("┻┻━━━━━━━");
+            printf("┏━━━╤━\n");
+            printf("┃┃  O \n");
+            printf("┃┃ ╲|╱\n");
+            printf("┃┃  | \n");
+            printf("┃┃ ╱ ╲\n");
+            printf("┻┻━━━━━━━\n");
             break;
     }
 }
 
 void printCompanionCube(){
-    printf("The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak");
-    printf("+@##########M/             :@#########@/");
-    printf("##############$;H#######@;+#############");
-    printf("###############M########################");
-    printf("##############X,-/++/+\%+/,\%#############");
-    printf("############M$:           -X############");
-    printf("##########H;.      ,--.     =X##########");
-    printf(":X######M;     -$H@M##MH%:    :H#######@");
-    printf("  =\%#M+=,   ,+@#######M###H:    -=/M#\%");
-    printf("  \%M##@+   .X##$, ./+- ./###;    +M##\%");
-    printf("  \%####M.  /###=         @##M.   X###\%");
-    printf("  \%####M.  ;M##H:.     =$###X.   $###\%");
-    printf("  \%####@.   /####M$-./@#####:    %###\%");
-    printf("  \%H#M/,     /H###########@:     ./M#\%");
-    printf(" ;$H##@@H:    .;$HM#MMMH$;,   ./H@M##M$=");
-    printf("X#########%.      ..,,.     .;@#########");
-    printf("###########H+:.           ./@###########");
-    printf("##############/ ./%%%%+/.-M#############");
-    printf("##############H$@#######@@##############");
-    printf("##############X\%########M$M#############");
-    printf("+M##########H:            .$##########X=");
+    printf("The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak\n");
+    printf("+@##########M/             :@#########@/\n");
+    printf("##############$;H#######@;+#############\n");
+    printf("###############M########################\n");
+    printf("##############X,-/++/+\%+/,\%#############\n");
+    printf("############M$:           -X############\n");
+    printf("##########H;.      ,--.     =X##########\n");
+    printf(":X######M;     -$H@M##MH%:    :H#######@\n");
+    printf("  =\%#M+=,   ,+@#######M###H:    -=/M#\%\n");
+    printf("  \%M##@+   .X##$, ./+- ./###;    +M##\%\n");
+    printf("  \%####M.  /###=         @##M.   X###\%\n");
+    printf("  \%####M.  ;M##H:.     =$###X.   $###\%\n");
+    printf("  \%####@.   /####M$-./@#####:    %###\%\n");
+    printf("  \%H#M/,     /H###########@:     ./M#\%\n");
+    printf(" ;$H##@@H:    .;$HM#MMMH$;,   ./H@M##M$=\n");
+    printf("X#########%.      ..,,.     .;@#########\n");
+    printf("###########H+:.           ./@###########\n");
+    printf("##############/ ./%%%%+/.-M#############\n");
+    printf("##############H$@#######@@##############\n");
+    printf("##############X\%########M$M#############\n");
+    printf("+M##########H:            .$##########X=\n");
 
 }
