@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 void print_hangman(int tries_left);
-char** guess_fill_in(char** fill_in, char* dictIn, char* guess);
+char* guess_fill_in(char** fill_in, char* dictIn, char* guess);
 void autofill_in(char fill_in[], char word[]);
 void print_fill_in(char fill_in[]);
 int check_phrase(char *fill_in, char dictIn[], char guess[]);
@@ -21,33 +21,33 @@ int main(void) {
     dict[4] = "Are you still there?";
 
     int phrase_num = rand()%(4-0 + 1) + 0;
-    int phrase_size = sizeof(dict[phrase_num])/ sizeof(char);
+    int phrase_size = sizeof(*dict[phrase_num])/ sizeof(char);
 
     char *word[phrase_size];
     for (int i=0; i<phrase_size; i++) word[i] = (char *)malloc(phrase_size * sizeof(char));
-    for (char *p = word; *p; ++p) *p = tolower(*p);
+    for (char *p = *word; *p; ++p) *p = tolower(*p);
 
-    char *phrase_guess[phrase_size];
-    for (int i=0; i<phrase_size; i++) phrase_guess[i] = (char *)malloc(phrase_size * sizeof(char));
+    char phrase_guess[phrase_size];
+    //for (int i=0; i<phrase_size; i++) phrase_guess[i] = (char *)malloc(phrase_size * sizeof(char));
 
     int tries = 7;
     int pass = 0;
 
-    char fill_in[phrase_size];
+    char *fill_in[phrase_size];
     for (int i=0; i<phrase_size; i++) fill_in[i] = (char *)malloc(phrase_size * sizeof(char));
 
-    autofill_in(*fill_in, word);
+    autofill_in(*fill_in, *word);
 
     printf("Welcome to Hangman!");
     printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!\n");
 
     while (pass != 1){
         gets(guess);
-        if (strncmp(guess,"Phrase") || strncmp(guess,"phrase")) {
+        if (strcmp(guess,"Phrase") || strcmp(guess,"phrase")) {
             gets(phrase_guess);
-            for (char *p = phrase_guess; *p; ++p) *p = tolower(*p);
+            for (char *p = *phrase_guess; *p; ++p) *p = tolower(*p);
 
-            int cmp = check_phrase(fill_in, word, phrase_guess);
+            int cmp = check_phrase(*fill_in, *word, *phrase_guess);
             if (cmp != 0) {
                 tries -= 3;
                 printf("You're not a good person. You know that, right? [-3 tries] %d remaining.\n", tries);
