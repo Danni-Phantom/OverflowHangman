@@ -25,13 +25,11 @@ int main(void) {
     srand(time(NULL));
     int phrase_num = rand()%(4-0 + 1) + 0;
     char* plz = dict[phrase_num];
-    int phrase_size = sizeof(sizeof(plz) / sizeof(char));
+    int phrase_size = strlen(dict[phrase_num]);
 
     char* word = malloc(phrase_size * sizeof(char));
     word = dict[phrase_num];
     //for (int i = 0; i < phrase_size; i++) word[i] = tolower(word[i]);
-
-    printf("can I get here? %d and whats the number? %d", phrase_size, phrase_num);
 
     char phrase_guess[phrase_size];
     //for (int i=0; i<phrase_size; i++) phrase_guess[i] = (char *)malloc(phrase_size * sizeof(char));
