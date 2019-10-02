@@ -4,15 +4,15 @@
 #include <ctype.h>
 
 void print_hangman(int tries_left);
-char* guess_fill_in(char *fill_in, char *word, char guess);
-void autofill_in(char *fill_in, char *word);
-void print_fill_in(char fill_in[]);
-int check_phrase(char *fill_in, char *dictIn, char *guess);
+char* guess_fill_in(char* fill_in, char* word, char guess);
+void autofill_in(char* fill_in, char* word);
+void print_fill_in(char* fill_in);
+int check_phrase(char* fill_in, char* dictIn, char* guess);
 void printCompanionCube();
 
 int main(void) {
 
-    char *dict[5];
+    char* dict[5];
     char guess[6];
     dict[0] = "Cake is a lie";
     dict[1] = "ThIs StaTEmEnt Is FaLSe - Glados";
@@ -20,12 +20,18 @@ int main(void) {
     dict[3] = "I'm a potato";
     dict[4] = "Are you still there?";
 
-    int phrase_num = rand()%(4-0 + 1) + 0;
-    int phrase_size = sizeof(dict[phrase_num])/ sizeof(char);
+    printf("stop %s\n", dict[0]);
 
-    char *word[phrase_size];
-    for (int i=0; i<phrase_size; i++) word[i] = (char *)malloc(phrase_size * sizeof(char));
-    for (int i = 0; i < phrase_size; i++) word[i] = tolower(word[i]);
+    srand(time(NULL));
+    int phrase_num = rand()%(4-0 + 1) + 0;
+    char* plz = dict[phrase_num];
+    int phrase_size = sizeof(sizeof(plz) / sizeof(char));
+
+    char* word = malloc(phrase_size * sizeof(char));
+    word = dict[phrase_num];
+    //for (int i = 0; i < phrase_size; i++) word[i] = tolower(word[i]);
+
+    printf("can I get here? %d and whats the number? %d", phrase_size, phrase_num);
 
     char phrase_guess[phrase_size];
     //for (int i=0; i<phrase_size; i++) phrase_guess[i] = (char *)malloc(phrase_size * sizeof(char));
@@ -33,16 +39,16 @@ int main(void) {
     int tries = 7;
     int pass = 0;
 
-    char *fill_in[phrase_size];
-    for (int i=0; i<phrase_size; i++) fill_in[i] = (char *)malloc(phrase_size * sizeof(char));
+    char* fill_in = malloc(phrase_size* sizeof(char));
 
-    autofill_in(*fill_in, *word);
+    autofill_in(fill_in, word);
 
     printf("Welcome to Hangman!");
-    printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!\n");
+
 
     while (pass != 1){
-        gets(guess);
+        printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!\n");
+        scanf(" %s", guess);
         if (strcmp(guess,"Phrase") || strcmp(guess,"phrase")) {
             gets(phrase_guess);
             for (int i = 0; i < phrase_size; i++) phrase_guess[i] = tolower(phrase_guess[i]);
