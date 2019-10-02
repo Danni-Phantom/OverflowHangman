@@ -108,19 +108,21 @@ char* guess_fill_in(char** fill_in, char* dictIn, char* guess) {
 }
 
 // This fills in all Punctuation or Spaces
-void autofill_in(char* fill_in, char dictIn[]) {
+void autofill_in(char* fill_in, char word[]) {
     int phrase_size = sizeof(fill_in)/sizeof(char);
     for (int a = 0; a < fill_in; a++) {
-        if (dictIn[a] == ' ') {
+        if (word[a] == ' ') {
             fill_in[a] = ' ';
-        } else if (dictIn[a] == '-') {
-            fill_in[a] = '-';
-        } else if (dictIn[a] == '?') {
-            fill_in[a] = '?';
-        }  else if (dictIn[a] == '\'') {
-            fill_in[a] = '\'';
-        }  else {
-            fill_in[a] = '_';
+        } else if (word[a] == '-') {
+            word[a] = '-';
+        } else if (word[a] == '?') {
+            word[a] = '?';
+        } else if (word[a] == '\'') {
+            word[a] = '\'';
+        } else if (word[a] == '='){
+            word[a] = '=';
+        } else {
+            word[a] = '_';
         }
     }
 }
