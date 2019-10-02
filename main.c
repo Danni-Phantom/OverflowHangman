@@ -4,10 +4,10 @@
 #include <ctype.h>
 
 void print_hangman(int tries_left);
-char* guess_fill_in(char** fill_in, char* dictIn, char* guess);
-void autofill_in(char fill_in[], char word[]);
+char* guess_fill_in(char *fill_in, char *word, char guess);
+void autofill_in(char *fill_in, char *word);
 void print_fill_in(char fill_in[]);
-int check_phrase(char *fill_in, char dictIn[], char guess[]);
+int check_phrase(char *fill_in, char *dictIn, char *guess);
 void printCompanionCube();
 
 int main(void) {
@@ -21,11 +21,11 @@ int main(void) {
     dict[4] = "Are you still there?";
 
     int phrase_num = rand()%(4-0 + 1) + 0;
-    int phrase_size = sizeof(*dict[phrase_num])/ sizeof(char);
+    int phrase_size = sizeof(dict[phrase_num])/ sizeof(char);
 
     char *word[phrase_size];
     for (int i=0; i<phrase_size; i++) word[i] = (char *)malloc(phrase_size * sizeof(char));
-    for (char *p = *word; *p; ++p) *p = tolower(*p);
+    for (int i = 0; i < phrase_size; i++) word[i] = tolower(word[i]);
 
     char phrase_guess[phrase_size];
     //for (int i=0; i<phrase_size; i++) phrase_guess[i] = (char *)malloc(phrase_size * sizeof(char));
@@ -45,14 +45,14 @@ int main(void) {
         gets(guess);
         if (strcmp(guess,"Phrase") || strcmp(guess,"phrase")) {
             gets(phrase_guess);
-            for (char *p = *phrase_guess; *p; ++p) *p = tolower(*p);
+            for (int i = 0; i < phrase_size; i++) phrase_guess[i] = tolower(phrase_guess[i]);
 
             int cmp = check_phrase(*fill_in, *word, *phrase_guess);
             if (cmp != 0) {
                 tries -= 3;
                 printf("You're not a good person. You know that, right? [-3 tries] %d remaining.\n", tries);
                 print_hangman(tries);
-                print_fill_in(fill_in);
+                print_fill_in(*fill_in);
 
             }
 
@@ -72,7 +72,7 @@ int main(void) {
 }
 
 // Checks if the phrase guess is complete? Not sure if needed, but ehhhhh
-int check_phrase(char* fill_in, char dictIn[], char guess[]) {
+int check_phrase(char *fill_in, char *dictIn, char *guess) {
     int size = sizeof(dictIn)/ sizeof(char);
     int flag = 0;
     for (int a = 0; a < size; a++){
@@ -81,16 +81,11 @@ int check_phrase(char* fill_in, char dictIn[], char guess[]) {
             break;
         }
     }
-
-    for (int a = 0; a < size; a++) {
-        guess_fill_in(fill_in, dictIn, guess[a]);
-    }
-
     return flag;
 }
 
 // Print the blanks and filled in characters
-void print_fill_in(char fill_in[]) {
+void print_fill_in(char *fill_in) {
     int s = sizeof(fill_in)/sizeof(char);
     for (int a = 0; a < s; a++) {
         printf(fill_in[a] + " ");
@@ -98,7 +93,7 @@ void print_fill_in(char fill_in[]) {
 }
 
 // this fills in the characters from the phrase
-char* guess_fill_in(char** fill_in, char* dictIn, char* guess) {
+char* guess_fill_in(char *fill_in, char *dictIn, char guess) {
     int s = sizeof(dictIn)/sizeof(char);
     for (int a = 0; a < s; a++) {
         if (dictIn[a] == guess) {
@@ -108,7 +103,7 @@ char* guess_fill_in(char** fill_in, char* dictIn, char* guess) {
 }
 
 // This fills in all Punctuation or Spaces
-void autofill_in(char* fill_in, char word[]) {
+void autofill_in(char* fill_in, char *word) {
     int phrase_size = sizeof(fill_in)/sizeof(char);
     for (int a = 0; a < fill_in; a++) {
         if (word[a] == ' ') {
