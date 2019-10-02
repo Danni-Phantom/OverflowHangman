@@ -7,7 +7,7 @@ void print_hangman(int tries_left);
 char* guess_fill_in(char* fill_in, char* word, char guess);
 void autofill_in(char* fill_in, char* word);
 void print_fill_in(char* fill_in);
-int check_phrase(char* fill_in, char* dictIn, char* guess);
+int check_phrase(char* fill_in, char* dictIn, char* guess, int size);
 void printCompanionCube();
 
 int main(void) {
@@ -40,20 +40,26 @@ int main(void) {
     autofill_in(fill_in, word);
     printf("Welcome to Hangman!\n");
 
-    while (pass != 1){
+
+    while (pass != 100){
+        print_hangman(tries);
         printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!\n");
         scanf(" %s", guess);
         if (strcmp(guess,"Phrase") || strcmp(guess,"phrase")) {
-            gets(phrase_guess);
-            for (int i = 0; i < phrase_size; i++) phrase_guess[i] = tolower(phrase_guess[i]);
-
-            int cmp = check_phrase(*fill_in, *word, *phrase_guess);
+            printf("Make a guess:");
+            scanf(" %s", phrase_guess);
+            //for (int i = 0; i < phrase_size; i++) phrase_guess[i] = tolower(phrase_guess[i]);
+            
+            int cmp = check_phrase(*fill_in, *word, *phrase_guess, phrase_size);
+            printf("This works");
             if (cmp != 0) {
                 tries -= 3;
                 printf("You're not a good person. You know that, right? [-3 tries] %d remaining.\n", tries);
                 print_hangman(tries);
-                print_fill_in(*fill_in);
+                print_fill_in(fill_in);
 
+            } else{
+                pass = 100;
             }
 
         } else if (guess[1] == '\0') {
@@ -65,35 +71,37 @@ int main(void) {
             // print "I feel sorry for you, really, because you're not even in the right place"
 
         } else {
-
+            printf("Where are you? (Try again)");
         }
 
     }
 }
 
 // Checks if the phrase guess is complete? Not sure if needed, but ehhhhh
-int check_phrase(char *fill_in, char *dictIn, char *guess) {
-    int size = sizeof(dictIn)/ sizeof(char);
+int check_phrase(char* fill_in, char* dictIn, char* guess, int size) {
     int flag = 0;
     for (int a = 0; a < size; a++){
+        printf("%d of loop", a);
         if (guess[a] != dictIn[a]) {
+            printf("in if");
             flag = 1;
             break;
         }
     }
+    printf("After loop");
     return flag;
 }
 
 // Print the blanks and filled in characters
-void print_fill_in(char *fill_in) {
+void print_fill_in(char* fill_in) {
     int s = sizeof(fill_in)/sizeof(char);
     for (int a = 0; a < s; a++) {
-        printf("%s ", fill_in[a]);
+        printf(fill_in[a] + " ");
     }
 }
 
 // this fills in the characters from the phrase
-char* guess_fill_in(char *fill_in, char *dictIn, char guess) {
+char* guess_fill_in(char* fill_in, char* dictIn, char guess) {
     int s = sizeof(dictIn)/sizeof(char);
     for (int a = 0; a < s; a++) {
         if (dictIn[a] == guess) {
@@ -128,68 +136,76 @@ void print_hangman(int tries_left) {
     }
     switch (tries_left) {
         case 7:
-            printf("┏━━━╤━\n");
-            printf("┃┃    \n");
-            printf("┃┃\n");
-            printf("┃┃\n");
-            printf("┃┃\n");
-            printf("┻┻━━━━━━━\n");
+            printf("  _______\n");
+            printf("  |/\n");
+            printf("  |\n");
+            printf("  |\n");
+            printf("  |\n");
+            printf("  |\n");
+            printf("__|_________\n\n");
             break;
         case 6:
-            printf("┏━━━╤━\n");
-            printf("┃┃  O \n");
-            printf("┃┃\n");
-            printf("┃┃\n");
-            printf("┃┃\n");
-            printf("┻┻━━━━━━━\n");
+      printf("  _______\n");
+      printf("  |/   | \n");
+      printf("  |    O \n");
+      printf("  |\n");
+      printf("  |\n");
+      printf("  |\n");
+      printf("__|_________\n\n");
             break;
         case 5:
-            printf("┏━━━╤━\n");
-            printf("┃┃  O \n");
-            printf("┃┃  | \n");
-            printf("┃┃    \n");
-            printf("┃┃    \n");
-            printf("┻┻━━━━━━━\n");
+      printf("  _______\n");
+      printf("  |/   | \n");
+      printf("  |    O \n");
+      printf("  |    |\n");
+      printf("  |    |\n");
+      printf("  |\n");
+      printf("__|_________\n\n");
             break;
         case 4:
-            printf("┏━━━╤━\n");
-            printf("┃┃  O \n");
-            printf("┃┃ ╲| \n");
-            printf("┃┃    \n");
-            printf("┃┃    \n");
-            printf("┻┻━━━━━━━\n");
+      printf("  _______\n");
+      printf("  |/   | \n");
+      printf("  |    O \n");
+      printf("  |   \\|\n");
+      printf("  |    | \n");
+      printf("  |\n");
+      printf("__|_________\n\n");
             break;
         case 3:
-            printf("┏━━━╤━\n");
-            printf("┃┃  O \n");
-            printf("┃┃ ╲|╱\n");
-            printf("┃┃    \n");
-            printf("┃┃    \n");
-            printf("┻┻━━━━━━━\n");
+      printf("  _______\n");
+      printf("  |/   | \n");
+      printf("  |    O \n");
+      printf("  |   \\|/\n");
+      printf("  |    | \n");
+      printf("  |\n");
+      printf("__|_________\n\n");
             break;
         case 2:
-            printf("┏━━━╤━\n");
-            printf("┃┃  O \n");
-            printf("┃┃ ╲|╱\n");
-            printf("┃┃  | \n");
-            printf("┃┃    \n");
-            printf("┻┻━━━━━━━\n");
+      printf("  _______\n");
+      printf("  |/   | \n");
+      printf("  |    O \n");
+      printf("  |   \\|/\n");
+      printf("  |    | \n");
+      printf("  |   /\n");
+      printf("__|_________\n\n");
             break;
         case 1:
-            printf("┏━━━╤━\n");
-            printf("┃┃  O \n");
-            printf("┃┃ ╲|╱\n");
-            printf("┃┃  | \n");
-            printf("┃┃ ╱  \n");
-            printf("┻┻━━━━━━━\n");
+      printf("  _______\n");
+      printf("  |/   | \n");
+      printf("  |    O \n");
+      printf("  |   \\|/\n");
+      printf("  |    | \n");
+      printf("  |   / \\\n");
+      printf("__|_________\n\n");
             break;
         case 0:
-            printf("┏━━━╤━\n");
-            printf("┃┃  O \n");
-            printf("┃┃ ╲|╱\n");
-            printf("┃┃  | \n");
-            printf("┃┃ ╱ ╲\n");
-            printf("┻┻━━━━━━━\n");
+      printf("  _______\n");
+      printf("  |/   | \n");
+      printf("  |    X \n");
+      printf("  |   \\|/\n");
+      printf("  |    | \n");
+      printf("  |   / \\\n");
+      printf("__|_________\n\n");
             break;
     }
 }
