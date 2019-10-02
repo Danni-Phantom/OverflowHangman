@@ -4,8 +4,8 @@
 #include <ctype.h>
 
 void print_hangman(int tries_left);
-char* guess_fill_in(char dictIn[], char guess[], char a);
-void autofill_in(char *fill_in, char word[]);
+char** guess_fill_in(char** fill_in, char* dictIn, char* guess);
+void autofill_in(char fill_in[], char word[]);
 void print_fill_in(char fill_in[]);
 int check_phrase(char *fill_in, char dictIn[], char guess[]);
 void printCompanionCube();
@@ -36,14 +36,14 @@ int main(void) {
     char fill_in[phrase_size];
     for (int i=0; i<phrase_size; i++) fill_in[i] = (char *)malloc(phrase_size * sizeof(char));
 
-    autofill_in(fill_in, word);
+    autofill_in(*fill_in, word);
 
     printf("Welcome to Hangman!");
     printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!\n");
 
     while (pass != 1){
         gets(guess);
-        if (guess == "Phrase") {
+        if (strncmp(guess,"Phrase") || strncmp(guess,"phrase")) {
             gets(phrase_guess);
             for (char *p = phrase_guess; *p; ++p) *p = tolower(*p);
 
@@ -98,7 +98,7 @@ void print_fill_in(char fill_in[]) {
 }
 
 // this fills in the characters from the phrase
-char* guess_fill_in(char* fill_in, char* dictIn, char* guess) {
+char* guess_fill_in(char** fill_in, char* dictIn, char* guess) {
     int s = sizeof(dictIn)/sizeof(char);
     for (int a = 0; a < s; a++) {
         if (dictIn[a] == guess) {
@@ -199,25 +199,25 @@ void print_hangman(int tries_left) {
 
 void printCompanionCube(){
     printf("The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak\n");
-    printf("+@##########M/             :@#########@/\n");
-    printf("##############$;H#######@;+#############\n");
-    printf("###############M########################\n");
-    printf("##############X,-/++/+\%+/,\%#############\n");
-    printf("############M$:           -X############\n");
-    printf("##########H;.      ,--.     =X##########\n");
-    printf(":X######M;     -$H@M##MH%:    :H#######@\n");
-    printf("  =\%#M+=,   ,+@#######M###H:    -=/M#\%\n");
-    printf("  \%M##@+   .X##$, ./+- ./###;    +M##\%\n");
-    printf("  \%####M.  /###=         @##M.   X###\%\n");
-    printf("  \%####M.  ;M##H:.     =$###X.   $###\%\n");
-    printf("  \%####@.   /####M$-./@#####:    %###\%\n");
-    printf("  \%H#M/,     /H###########@:     ./M#\%\n");
-    printf(" ;$H##@@H:    .;$HM#MMMH$;,   ./H@M##M$=\n");
-    printf("X#########%.      ..,,.     .;@#########\n");
-    printf("###########H+:.           ./@###########\n");
-    printf("##############/ ./%%%%+/.-M#############\n");
-    printf("##############H$@#######@@##############\n");
-    printf("##############X\%########M$M#############\n");
-    printf("+M##########H:            .$##########X=\n");
+//    printf("+@##########M/             :@#########@/\n");
+//    printf("##############$;H#######@;+#############\n");
+//    printf("###############M########################\n");
+//    printf("##############X,-/++/+\%+/,\%#############\n");
+//    printf("############M$:           -X############\n");
+//    printf("##########H;.      ,--.     =X##########\n");
+//    printf(":X######M;     -$H@M##MH%:    :H#######@\n");
+//    printf("  =\%#M+=,   ,+@#######M###H:    -=/M#\%\n");
+//    printf("  \%M##@+   .X##$, ./+- ./###;    +M##\%\n");
+//    printf("  \%####M.  /###=         @##M.   X###\%\n");
+//    printf("  \%####M.  ;M##H:.     =$###X.   $###\%\n");
+//    printf("  \%####@.   /####M$-./@#####:    %###\%\n");
+//    printf("  \%H#M/,     /H###########@:     ./M#\%\n");
+//    printf(" ;$H##@@H:    .;$HM#MMMH$;,   ./H@M##M$=\n");
+//    printf("X#########%.      ..,,.     .;@#########\n");
+//    printf("###########H+:.           ./@###########\n");
+//    printf("##############/ ./%%%%+/.-M#############\n");
+//    printf("##############H$@#######@@##############\n");
+//    printf("##############X\%########M$M#############\n");
+//    printf("+M##########H:            .$##########X=\n");
 
 }
