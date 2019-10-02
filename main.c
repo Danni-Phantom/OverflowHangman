@@ -114,15 +114,15 @@ void autofill_in(char* fill_in, char word[]) {
         if (word[a] == ' ') {
             fill_in[a] = ' ';
         } else if (word[a] == '-') {
-            word[a] = '-';
+            fill_in[a] = '-';
         } else if (word[a] == '?') {
-            word[a] = '?';
+            fill_in[a] = '?';
         } else if (word[a] == '\'') {
-            word[a] = '\'';
+            fill_in[a] = '\'';
         } else if (word[a] == '='){
-            word[a] = '=';
+            fill_in[a] = '=';
         } else {
-            word[a] = '_';
+            fill_in[a] = '_';
         }
     }
 }
