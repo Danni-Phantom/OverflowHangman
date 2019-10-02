@@ -40,7 +40,6 @@ int main(void) {
     autofill_in(fill_in, word);
     printf("Welcome to Hangman!\n");
 
-
     while (pass != 1){
         printf("Please guess a letter! If you would like to guess the phrase type \"Phrase\" followed by enter and you will be prompted for your guess!\n");
         scanf(" %s", guess);
@@ -89,7 +88,7 @@ int check_phrase(char *fill_in, char *dictIn, char *guess) {
 void print_fill_in(char *fill_in) {
     int s = sizeof(fill_in)/sizeof(char);
     for (int a = 0; a < s; a++) {
-        printf(fill_in[a] + " ");
+        printf("%s ", fill_in[a]);
     }
 }
 
