@@ -20,8 +20,6 @@ int main(void) {
     dict[3] = "I'm a potato";
     dict[4] = "Are you still there?";
 
-    printf("stop %s\n", dict[0]);
-
     srand(time(NULL));
     int phrase_num = rand()%(4-0 + 1) + 0;
     char* plz = dict[phrase_num];
@@ -38,10 +36,9 @@ int main(void) {
     int pass = 0;
 
     char* fill_in = malloc(phrase_size* sizeof(char));
-
+    
     autofill_in(fill_in, word);
-
-    printf("Welcome to Hangman!");
+    printf("Welcome to Hangman!\n");
 
 
     while (pass != 1){
@@ -108,8 +105,8 @@ char* guess_fill_in(char *fill_in, char *dictIn, char guess) {
 
 // This fills in all Punctuation or Spaces
 void autofill_in(char* fill_in, char *word) {
-    int phrase_size = sizeof(fill_in)/sizeof(char);
-    for (int a = 0; a < fill_in; a++) {
+    int phrase_size = strlen(fill_in);
+    for (int a = 0; a < phrase_size; a++) {
         if (word[a] == ' ') {
             fill_in[a] = ' ';
         } else if (word[a] == '-') {
